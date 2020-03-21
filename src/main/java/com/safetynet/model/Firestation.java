@@ -54,9 +54,6 @@ public class Firestation {
 	public String toString() {
 		return "Firestation [address=" + address + ", station=" + station + "]";
 	}
-
-	
-	
 	
 
 }
