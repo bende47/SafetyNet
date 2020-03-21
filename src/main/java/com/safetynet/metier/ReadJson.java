@@ -5,7 +5,6 @@ import com.safetynet.model.Firestation;
 import com.safetynet.model.Medicalrecord;
 import com.safetynet.model.Person;
 import com.safetynet.model.Safetynet;
-import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
