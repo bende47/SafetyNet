@@ -2,7 +2,6 @@ package com.safetynet.model;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -50,5 +49,14 @@ public class Firestation {
 	public void setAdditionalProperty(String name, Object value) {
 		this.additionalProperties.put(name, value);
 	}
+
+	@Override
+	public String toString() {
+		return "Firestation [address=" + address + ", station=" + station + "]";
+	}
+
+	
+	
+	
 
 }

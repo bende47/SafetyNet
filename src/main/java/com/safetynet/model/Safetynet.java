@@ -63,4 +63,12 @@ public class Safetynet {
 		this.additionalProperties.put(name, value);
 	}
 
+	@Override
+	public String toString() {
+		return "Safetynet [persons=" + persons + ", firestations=" + firestations + ", medicalrecords=" + medicalrecords
+				+ "]";
+	}
+	
+	
+
 }

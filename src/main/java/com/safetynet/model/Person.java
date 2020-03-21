@@ -29,6 +29,8 @@ public class Person {
 	private String email;
 	@JsonIgnore
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	
+	
 
 	@JsonProperty("firstName")
 	public String getFirstName() {
@@ -109,5 +111,13 @@ public class Person {
 	public void setAdditionalProperty(String name, Object value) {
 		this.additionalProperties.put(name, value);
 	}
+
+	@Override
+	public String toString() {
+		return "Person [firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", city=" + city
+				+ ", zip=" + zip + ", phone=" + phone + ", email=" + email + "]";
+	}
+	
+	
 
 }
