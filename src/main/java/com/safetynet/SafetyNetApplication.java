@@ -21,7 +21,4 @@ public class SafetyNetApplication {
 	public Safetynet loadModel()  {
 		return ReadJson.readJsonFile(file);
 	}
-	
-	
-
 }
