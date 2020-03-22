@@ -31,7 +31,6 @@ public class Person {
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 	
 	
-
 	@JsonProperty("firstName")
 	public String getFirstName() {
 		return firstName;
