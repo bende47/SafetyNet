@@ -7,7 +7,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,7 +26,8 @@ public class PersonController {
 	
 	@Autowired
 	private PersonMetier personMetier;
-
+	
+	List<Person> listPerson=null;
 	
 	@PostMapping(value = "/person")
 	public Safetynet addPerson(@RequestBody Person person) {		
@@ -42,9 +42,8 @@ public class PersonController {
 	}
 	
 	@DeleteMapping(value = "/person")
-	public Safetynet deletePerson(@RequestBody Person person) {	
-		
-		List<Person> listPerson = safetynet.getPersons();		
+	public Safetynet deletePerson(@RequestBody Person person) {			
+		listPerson = safetynet.getPersons();		
 		listPerson=personMetier.deletePersonne(person);
 		return safetynet;
 	}

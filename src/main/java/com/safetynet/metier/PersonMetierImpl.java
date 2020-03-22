@@ -46,12 +46,10 @@ public class PersonMetierImpl implements PersonMetier {
 	}
 
 	@Override
-	public List<Person> deletePersonne(Person p) {
-	 
+	public List<Person> deletePersonne(Person p) {	 
 	 int j=0;
 	 int i=0;
-	 List<Person> lp=safetynet.getPersons();	 
-	
+	 List<Person> lp=safetynet.getPersons();		
 		for (Person person : lp) {
 			if(person.getLastName().equals(p.getLastName()) && person.getFirstName().equals(p.getFirstName())) {				
 				j = i   ;
@@ -59,9 +57,10 @@ public class PersonMetierImpl implements PersonMetier {
 			i++;
 		}			
 		lp.remove(j);
-		
 		logger.info("Response {}", lp);
 		return lp;
 	}
+	
+	
 
 }
