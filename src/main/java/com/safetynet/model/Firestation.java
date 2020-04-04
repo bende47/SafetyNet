@@ -1,59 +1,34 @@
 package com.safetynet.model;
 
-import java.util.HashMap;
-import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import java.util.HashSet;
+import java.util.Set;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "address", "station" })
 public class Firestation {
 
-	@JsonProperty("address")
-	private String address;
-	@JsonProperty("station")
-	private String station;
-	@JsonIgnore
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+	private int station;
+	private Set<String> addresses = new HashSet<>();
+	
+	public Firestation() {}
 
-	@JsonProperty("address")
-	public String getAddress() {
-		return address;
-	}
-
-	@JsonProperty("address")
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	@JsonProperty("station")
-	public String getStation() {
-		return station;
-	}
-
-	@JsonProperty("station")
-	public void setStation(String station) {
+	public Firestation(int station) {
 		this.station = station;
 	}
 
-	@JsonAnyGetter
-	public Map<String, Object> getAdditionalProperties() {
-		return this.additionalProperties;
+	public Set<String> getAddresses() {
+		return addresses;
 	}
 
-	@JsonAnySetter
-	public void setAdditionalProperty(String name, Object value) {
-		this.additionalProperties.put(name, value);
+	public int getStation() {
+		return station;
+	}
+
+	public void addAddress(String newAddress) {
+		addresses.add(newAddress);
 	}
 
 	@Override
 	public String toString() {
-		return "Firestation [address=" + address + ", station=" + station + "]";
+		return "Firestation [station=" + station + ", addresses=" + addresses + "]";
 	}
-	
 
 }

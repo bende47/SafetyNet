@@ -1,74 +1,50 @@
 package com.safetynet.model;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "persons", "firestations", "medicalrecords" })
+
 public class Safetynet {
 
-	@JsonProperty("persons")
-	private List<Person> persons = null;
-	@JsonProperty("firestations")
-	private List<Firestation> firestations = null;
-	@JsonProperty("medicalrecords")
-	private List<Medicalrecord> medicalrecords = null;
-	@JsonIgnore
-	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-	@JsonProperty("persons")
+	private List<Person> persons;
+	private Map<Integer, Firestation> firestations;
+	private Map<String, List<Person>> foyers;
+
+	public Safetynet(List<Person> persons, Map<Integer, Firestation> firestations,
+			Map<String, List<Person>> foyer) {
+		this.persons = persons;
+		this.firestations = firestations;
+		this.foyers = foyer;
+	}
+
 	public List<Person> getPersons() {
 		return persons;
 	}
 
-	@JsonProperty("persons")
 	public void setPersons(List<Person> persons) {
 		this.persons = persons;
 	}
 
-	@JsonProperty("firestations")
-	public List<Firestation> getFirestations() {
+	public Map<Integer, Firestation> getFirestations() {
 		return firestations;
 	}
 
-	@JsonProperty("firestations")
-	public void setFirestations(List<Firestation> firestations) {
+	public void setFirestations(Map<Integer, Firestation> firestations) {
 		this.firestations = firestations;
 	}
 
-	@JsonProperty("medicalrecords")
-	public List<Medicalrecord> getMedicalrecords() {
-		return medicalrecords;
+	public Map<String, List<Person>> getFoyer() {
+		return foyers;
 	}
 
-	@JsonProperty("medicalrecords")
-	public void setMedicalrecords(List<Medicalrecord> medicalrecords) {
-		this.medicalrecords = medicalrecords;
-	}
-
-	@JsonAnyGetter
-	public Map<String, Object> getAdditionalProperties() {
-		return this.additionalProperties;
-	}
-
-	@JsonAnySetter
-	public void setAdditionalProperty(String name, Object value) {
-		this.additionalProperties.put(name, value);
+	public void setFoyer(Map<String, List<Person>> foyer) {
+		this.foyers = foyer;
 	}
 
 	@Override
 	public String toString() {
-		return "Safetynet [persons=" + persons + ", firestations=" + firestations + ", medicalrecords=" + medicalrecords
-				+ "]";
+		return "SafetyNetModel [persons=" + persons + ", firestations=" + firestations + ", foyer=" + foyers + "]";
 	}
-	
-	
 
 }
