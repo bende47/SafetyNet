@@ -1,10 +1,12 @@
 package com.safetynet.model;
 
-public class Person {
-
+public class PersonInfo {
+	
 	private String firstName;
 
 	private String lastName;
+
+	private int age;
 
 	private String address;
 
@@ -17,15 +19,6 @@ public class Person {
 	private String email;
 
 	private Medicalrecord medicalRecord;
-
-	
-	public Medicalrecord getMedicalRecord() {
-		return medicalRecord;
-	}
-
-	public void setMedicalRecord(Medicalrecord medicalRecord) {
-		this.medicalRecord = medicalRecord;
-	}
 
 	public String getFirstName() {
 		return firstName;
@@ -41,6 +34,14 @@ public class Person {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 	public String getAddress() {
@@ -83,21 +84,35 @@ public class Person {
 		this.email = email;
 	}
 
-	public Person(String firstName, String lastName, String address, String city, String zip, String phone,
-			String email) {
+	public Medicalrecord getMedicalRecord() {
+		return medicalRecord;
+	}
+
+	public void setMedicalRecord(Medicalrecord medicalRecord) {
+		this.medicalRecord = medicalRecord;
+	}
+
+	public PersonInfo(String firstName, String lastName, int age, String address, String city, String zip, String phone,
+			String email, Medicalrecord medicalRecord) {
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.age = age;
 		this.address = address;
 		this.city = city;
 		this.zip = zip;
 		this.phone = phone;
 		this.email = email;
-	}
-	
-	@Override
-	public String toString() {
-		return "Person [firstName=" + firstName + ", lastName=" + lastName + ", address=" + address + ", city=" + city
-				+ ", zip=" + zip + ", phone=" + phone + ", email=" + email + ", medicalRecord=" + medicalRecord + "]";
+		this.medicalRecord = medicalRecord;
 	}
 
+	@Override
+	public String toString() {
+		return "PersonInfo [firstName=" + firstName + ", lastName=" + lastName + ", age=" + age + ", address=" + address
+				+ ", city=" + city + ", zip=" + zip + ", phone=" + phone + ", email=" + email + ", medicalRecord="
+				+ medicalRecord + "]";
+	}
+
+	
+	
+	
 }
