@@ -10,10 +10,7 @@ public class Firestation {
 	
 	public Firestation() {}
 
-	public Firestation(int station) {
-		this.station = station;
-	}
-
+	
 	public Set<String> getAddresses() {
 		return addresses;
 	}
@@ -25,6 +22,11 @@ public class Firestation {
 	public void addAddress(String newAddress) {
 		addresses.add(newAddress);
 	}
+	
+	public Firestation(int station) {
+		this.station = station;
+	}
+
 
 	@Override
 	public String toString() {

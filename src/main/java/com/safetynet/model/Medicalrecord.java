@@ -11,12 +11,7 @@ public class Medicalrecord {
 
 	private List<String> allergies;
 
-	public Medicalrecord(LocalDate birthdate, List<String> medications, List<String> allergies) {
-		this.birthdate = birthdate;
-		this.medications = medications;
-		this.allergies = allergies;
-	}
-
+	
 	public LocalDate getBirthdate() {
 		return birthdate;
 	}
@@ -28,6 +23,13 @@ public class Medicalrecord {
 	public List<String> getAllergies() {
 		return allergies;
 	}
+	
+	public Medicalrecord(LocalDate birthdate, List<String> medications, List<String> allergies) {
+		this.birthdate = birthdate;
+		this.medications = medications;
+		this.allergies = allergies;
+	}
+
 
 	@Override
 	public String toString() {
