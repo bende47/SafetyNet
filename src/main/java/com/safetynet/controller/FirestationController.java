@@ -39,21 +39,21 @@ public class FirestationController {
 	}
 	
 	@PutMapping(value="/firestation")
-	public  Safetynet updateFirestation(@RequestBody  Map<?, ?> firestation) {
+	public Safetynet updateFirestation(@RequestBody  Map<?, ?> firestation) {
 		Map<Integer, Firestation> getfirestations = safetynet.getFirestations();
 		firestationMetier.updateFirestation(Integer.parseInt(firestation.get("station").toString()), firestation.get("address").toString(), getfirestations);
 		return safetynet;
 	}
 	
 	@DeleteMapping(value="/firestation")
-	public  Safetynet deleteFirestation(@RequestBody  Map<?, ?> firestation) {
+	public Safetynet deleteFirestation(@RequestBody  Map<?, ?> firestation) {
 		Map<Integer, Firestation> getfirestations = safetynet.getFirestations();
 		firestationMetier.deleteFirestation(Integer.parseInt(firestation.get("station").toString()), firestation.get("address").toString(), getfirestations);
 		return safetynet;
 	}
 	
 	@GetMapping(value="/firestation")
-	public  PersonStation stationNumber(@RequestParam String stationNumber) throws ParseException {
+	public PersonStation stationNumber(@RequestParam String stationNumber) throws ParseException {
 		Map<Integer, Firestation> firestations = safetynet.getFirestations();
 		listPerson = safetynet.getPersons();
 		return firestationMetier.stationNumber(stationNumber,firestations,listPerson);
