@@ -22,7 +22,10 @@ public class SafetyNetApplication {
 	}
 	
 	@Bean
-	public Safetynet loadModel() throws IOException  {
+	public Safetynet lectureFichier() throws IOException  {
 		return readJson.readFile(file);
 	}
+	
+
+
 }
