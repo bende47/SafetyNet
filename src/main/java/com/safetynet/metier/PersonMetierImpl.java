@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import com.safetynet.model.Firestation;
 import com.safetynet.model.Person;
+import com.safetynet.model.PersonEnfant;
 import com.safetynet.model.PersonInfo;
 import com.safetynet.model.Safetynet;
 
@@ -29,47 +31,48 @@ public class PersonMetierImpl implements PersonMetier {
 	private Safetynet safetynet;
 	
 	private  Calendar calendar = Calendar.getInstance();
+	Person person=null;
 
 	@Override
-	public List<Person> addPerson(Person p) {
-		safetynet.getPersons().add(p);
-		logger.info("@RequestBody = {}", p);
+	public List<Person> addPerson(Map<?, ?>  p) {		
+		person = new Person(p.get("firstName").toString(), p.get("lastName").toString(), p.get("address").toString(), p.get("city").toString(), p.get("zip").toString(), p.get("phone").toString(), p.get("email").toString());
+		safetynet.getPersons().add(person);
+		logger.info("@RequestBody = {}", person);
 		logger.info("Response {} ", safetynet.getPersons());
 		logger.info("Nombre de personnes = {}", safetynet.getPersons().size());
 		return safetynet.getPersons();
 	}
 
 	@Override
-	public List<Person> updatePerson(Person p) {
-		for (Person person : safetynet.getPersons()) {
-			if(person.getLastName().equals(p.getLastName()) && person.getFirstName().equals(p.getFirstName())) {
-				person.setAddress(p.getAddress());
-				person.setCity(p.getCity());
-				person.setZip(p.getZip());
-				person.setPhone(p.getPhone());
-				person.setEmail(p.getEmail());
+	public List<Person> updatePerson(List<Person> listPerson, Person persons, String firstname,
+			String lastName) {
+		for (Person person : listPerson) {
+			if(person.getLastName().equals(lastName) && person.getFirstName().equals(firstname)) {
+				person.setAddress(persons.getAddress());
+				person.setCity(persons.getCity());
+				person.setZip(persons.getZip());
+				person.setPhone(persons.getPhone());
+				person.setEmail(persons.getEmail());
 			}
 		}
-		logger.info("@RequestBody = {}", p);
-		logger.info("Response {}", safetynet.getPersons());
-		logger.info("Nombre de personnes = {}", safetynet.getPersons().size());
-		return safetynet.getPersons();
+		logger.info("@RequestBody = {}", persons);
+		logger.info("Nombre de personnes = {}", listPerson.size());
+		return listPerson;
 	}
 
 	@Override
-	public List<Person> deletePersonne(Person p) {	 
+	public List<Person> deletePersonne(String firstName, String lastName, List<Person> listPersons) {	 
 	 int j=0;
 	 int i=0;
-	 List<Person> lp=safetynet.getPersons();		
-		for (Person person : lp) {
-			if(person.getLastName().equals(p.getLastName()) && person.getFirstName().equals(p.getFirstName())) {				
+		for (Person person : listPersons) {
+			if(person.getLastName().equals(lastName) && person.getFirstName().equals(firstName)) {				
 				j = i   ;
 			}
 			i++;
 		}			
-		lp.remove(j);
-		logger.info("Response {}", lp);
-		return lp;
+		listPersons.remove(j);
+		logger.info(listPersons);
+		return listPersons;
 	}
 
 	@Override
@@ -111,10 +114,10 @@ public class PersonMetierImpl implements PersonMetier {
 		int caljour=calendar.DAY_OF_MONTH - jour;
 
 		if (calmois >= 0 || calmois == 0 &&  calmois>= 0) {
-			logger.debug("age = ", calannee);
+			logger.debug("age = {}", calannee);
 			return calannee;
 		} else {
-			logger.debug("age = ", calannee - 1);
+			logger.debug("age = {}", calannee - 1);
 			return calannee - 1;
 		}
 	}
@@ -171,6 +174,27 @@ public class PersonMetierImpl implements PersonMetier {
 			}
 		}
 		return listEmail;
+	}
+
+	@Override
+	public List<PersonEnfant> listEnfant(Map<String, List<Person>> personFoyers, List<PersonEnfant> listEnfant,
+			String address) throws ParseException {
+		personFoyers.entrySet();
+		for (Entry<String, List<Person>> entry : personFoyers.entrySet()) {
+			String foyerAddress = entry.getKey();
+			if (!address.equals(foyerAddress)) {
+				continue;
+			}
+			List<Person> listFoyers = entry.getValue();
+			for (Person person : listFoyers) {
+				if (!personAdulte(person.getMedicalRecord().getBirthdate())) {
+					int age = determineAge(person.getMedicalRecord().getBirthdate());
+					PersonEnfant personEnfant = new PersonEnfant(age, person, listFoyers);
+					listEnfant.add(personEnfant);
+				}
+			}
+		}
+		return listEnfant;
 	}
 	
 	

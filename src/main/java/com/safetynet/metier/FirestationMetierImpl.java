@@ -109,7 +109,9 @@ public class FirestationMetierImpl implements FirestationMetier {
 			}
 		}
 		int enfant = listPersonInfo.size() - adulte;
-		return new PersonStation(listPersonInfo, adulte, enfant);
+		PersonStation listpersonStation = new PersonStation(listPersonInfo, adulte, enfant);
+
+		return listpersonStation;
 	}
 
 	@Override
