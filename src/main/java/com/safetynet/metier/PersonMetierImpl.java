@@ -80,17 +80,9 @@ public class PersonMetierImpl implements PersonMetier {
 		
 		/*Determiner l'annee */
 		int annee=date.getYear();
-		int calannee=calendar.get(Calendar.YEAR)-annee;
-		
-		/*Determiner le mois*/
-		int mois=date.getMonthValue();
-		int calmois=calendar.MONTH - mois;
-		
-		/*Determiner le jour*/
-		int jour = date.getDayOfMonth();
-		int caljour=calendar.DAY_OF_MONTH - jour;
+		int calannee=calendar.get(Calendar.YEAR)-annee;		
 
-		if (calannee > 18 || calannee == 18 && calmois >= 0 || calannee == 18 && calmois == 0 && caljour >= 0) {
+		if (calannee >= 18) {
 			logger.debug("Adult = {}", true);
 			return true;
 		} else {
@@ -100,20 +92,16 @@ public class PersonMetierImpl implements PersonMetier {
 	}
 
 	@Override
-	public int determineAge(LocalDate date) throws ParseException {
+	public int determineAge(LocalDate date)  {
 		/*Determiner l'annee */
 		int annee=date.getYear();
 		int calannee=calendar.get(Calendar.YEAR)-annee;
 		
 		/*Determiner le mois*/
 		int mois=date.getMonthValue();
-		int calmois=calendar.MONTH - mois;
-		
-		/*Determiner le jour*/
-		int jour = date.getDayOfMonth();
-		int caljour=calendar.DAY_OF_MONTH - jour;
+		int calmois=calendar.MONTH - mois;			
 
-		if (calmois >= 0 || calmois == 0 &&  calmois>= 0) {
+		if (calmois >= 0) {
 			logger.debug("age = {}", calannee);
 			return calannee;
 		} else {
@@ -123,22 +111,18 @@ public class PersonMetierImpl implements PersonMetier {
 	}
 
 	@Override
-	public List<String> phoneAlert(String firestation_number, Map<Integer, Firestation> firestation,
+	public List<String> phoneAlert(String firestationnumber, Map<Integer, Firestation> firestation,
 			List<Person> listPerson) {
 		
 		List<String> listNumero = new ArrayList<>();
 		Set<String> addresses = new HashSet<>();
-
-		Set cles = firestation.keySet();
-		Iterator it = cles.iterator();
-		while (it.hasNext()) {
-			Object station = it.next();
-			Firestation firestations = firestation.get(Integer.parseInt(firestation_number));
-
-			if (firestations.getStation() == Integer.parseInt(firestation_number)) {
+		
+		for (Entry<Integer, Firestation> keys : firestation.entrySet()) {
+			Firestation firestations = firestation.get(Integer.parseInt(firestationnumber));
+			if (firestations.getStation() == Integer.parseInt(firestationnumber)) {
 				addresses = firestations.getAddresses();
 			}
-		}
+        }
 
 		for (Person person : listPerson) {
 			if (addresses.contains(person.getAddress())) {
@@ -179,7 +163,6 @@ public class PersonMetierImpl implements PersonMetier {
 	@Override
 	public List<PersonEnfant> listEnfant(Map<String, List<Person>> personFoyers, List<PersonEnfant> listEnfant,
 			String address) throws ParseException {
-		personFoyers.entrySet();
 		for (Entry<String, List<Person>> entry : personFoyers.entrySet()) {
 			String foyerAddress = entry.getKey();
 			if (!address.equals(foyerAddress)) {

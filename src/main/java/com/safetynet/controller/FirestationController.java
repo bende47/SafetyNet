@@ -31,12 +31,20 @@ public class FirestationController {
 	private Safetynet safetynet;
 	
 	List<Person> listPerson=null;
+	
+	/*
+	 * Ajout de Firestation
+	 */
 	 
 	@PostMapping(value="/firestation")
 	public  Safetynet addFirestation(@RequestBody  Map<?, ?> firestation) {
 		firestationMetier.addFirestation(firestation);		
 		return safetynet;
-	}
+	}	
+	
+	/*
+	 * Modification  de Firestation
+	 */
 	
 	@PutMapping(value="/firestation")
 	public Safetynet updateFirestation(@RequestBody  Map<?, ?> firestation) {
@@ -45,12 +53,20 @@ public class FirestationController {
 		return safetynet;
 	}
 	
+	/*
+	 * Suppression de firestation
+	 */
+	
 	@DeleteMapping(value="/firestation")
 	public Safetynet deleteFirestation(@RequestBody  Map<?, ?> firestation) {
 		Map<Integer, Firestation> getfirestations = safetynet.getFirestations();
 		firestationMetier.deleteFirestation(Integer.parseInt(firestation.get("station").toString()), firestation.get("address").toString(), getfirestations);
 		return safetynet;
 	}
+	
+	/*
+	 * Liste des personnes couvertes par la caserne de pompiers correspondante
+	 */
 	
 	@GetMapping(value="/firestation")
 	public PersonStation stationNumber(@RequestParam String stationNumber) throws ParseException {
@@ -59,12 +75,22 @@ public class FirestationController {
 		return firestationMetier.stationNumber(stationNumber,firestations,listPerson);
 	}
 	
+	
+	/*
+	 * Liste des habitants vivant à l’adresse donnée ainsi que le numéro de la caserne de pompiers la desservant		
+	 */
+	
 	@GetMapping(value="/fire")
 	public List<PersonHabitant> fire(@RequestParam String address) throws ParseException {
 		listPerson = safetynet.getPersons();
 		Map<Integer, Firestation> getfirestations = safetynet.getFirestations();
 		return firestationMetier.fire(address, listPerson, getfirestations);
 	}
+	
+	/*
+	 * Liste de tous les foyers desservis par la caserne. Cette liste doit regrouper les personnes par adresse
+	 */
+	
 	
 	@GetMapping(value="/flood/stations")
 	public List<Person> flood(@RequestParam String stations) throws ParseException {

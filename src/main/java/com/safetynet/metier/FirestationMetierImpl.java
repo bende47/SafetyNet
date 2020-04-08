@@ -3,9 +3,9 @@ package com.safetynet.metier;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import org.apache.logging.log4j.LogManager;
@@ -41,40 +41,34 @@ public class FirestationMetierImpl implements FirestationMetier {
 		return safetynet;
 	}
 
-	@SuppressWarnings("rawtypes")
 	@Override
 	public Map<Integer, Firestation> updateFirestation(int stationNumber, String stationAdress,
 			Map<Integer, Firestation> getfirestations) {
-		Set cles = getfirestations.keySet();
-		Iterator it = cles.iterator();
-
-		while (it.hasNext()) {
-			Object station = it.next();
-			Firestation fire = getfirestations.get(station);
+			
+		for (Entry<Integer, Firestation> keys : getfirestations.entrySet()) {
+			Firestation fire = getfirestations.get(keys.getKey());
 			if (fire.getAddresses().contains(stationAdress)) {
 				fire.getAddresses().remove(stationAdress);
 			}
 			if (fire.getStation() == stationNumber) {
 				fire.addAddress(stationAdress);
 			}
-		}
+        }
+		
 		return getfirestations;
 	}
 	
-	@SuppressWarnings("rawtypes")
 	@Override
 	public Map<Integer, Firestation> deleteFirestation(int stationNumber, String stationAdress,
 			Map<Integer, Firestation> getfirestations) {
-		Set cles = getfirestations.keySet();
-		Iterator it = cles.iterator();
-
-		while (it.hasNext()) {
-			Object station = it.next();
-			Firestation fire = getfirestations.get(station);
+		
+		for (Entry<Integer, Firestation> keys : getfirestations.entrySet()) {
+			Firestation fire = getfirestations.get(keys.getKey());
 			if (fire.getAddresses().contains(stationAdress)) {
 				fire.getAddresses().remove(stationAdress);
 			}
-		}
+        }
+		
 		return getfirestations;
 	}
 
@@ -83,18 +77,13 @@ public class FirestationMetierImpl implements FirestationMetier {
 			List<Person> listPerson) throws ParseException {
 		List<Person> listPersonInfo = new ArrayList<>();
 		Set<String> addresses = new HashSet<>();
-
-		Set cles = firestations.keySet();
-		Iterator it = cles.iterator();
-
-		while (it.hasNext()) {
-			Object station = it.next();
+		
+		for (Entry<Integer, Firestation> keys : firestations.entrySet()) {
 			Firestation fire = firestations.get(Integer.parseInt(stationNumber));
-
 			if (fire.getStation() == Integer.parseInt(stationNumber)) {
 				addresses = fire.getAddresses();
 			}
-		}
+        }
 
 		for (Person person : listPerson) {
 			if (addresses.contains(person.getAddress())) {
@@ -119,12 +108,8 @@ public class FirestationMetierImpl implements FirestationMetier {
 			throws ParseException {
 		List<PersonHabitant> listPersonHabitant = new ArrayList<>();
 
-		Set cles = firestations.keySet();
-		Iterator it = cles.iterator();
-
-		while (it.hasNext()) {
-			Object station = it.next();
-			Firestation fire = firestations.get(station);
+		for (Entry<Integer, Firestation> keys : firestations.entrySet()) {
+			Firestation fire = firestations.get(keys.getKey());
 			if (fire.getAddresses().contains(address)) {
 				int stationNum = fire.getStation();
 				for (Person person : listPerson) {
@@ -135,8 +120,9 @@ public class FirestationMetierImpl implements FirestationMetier {
 					}
 				}
 			}
-		}
-
+			
+        }
+		
 		return listPersonHabitant;
 	}
 
@@ -146,31 +132,22 @@ public class FirestationMetierImpl implements FirestationMetier {
 
 		List<Person> listPersonInfo = new ArrayList<Person>();
 		Set<String> addresses = new HashSet<String>();
-
-		Set cles = firestations.keySet();
-		Iterator it = cles.iterator();
-
-		while (it.hasNext()) {
-			Object station = it.next();
+		
+		for (Entry<Integer, Firestation> keys : firestations.entrySet()) {
 			Firestation fire = firestations.get(Integer.parseInt(stations));
-
 			if (fire.getStation() == Integer.parseInt(stations)) {
 				addresses = fire.getAddresses();
 			}
-		}
-
-		Set key = Foyers.keySet();
-		Iterator iter = key.iterator();
-		while (iter.hasNext()) {
-			Object num = iter.next();
-			List<Person> persons = Foyers.get(num);
-
+        }
+		
+		for (Entry<String, List<Person>> keys : Foyers.entrySet()) {
+			List<Person> persons = Foyers.get(keys.getKey());
 			for (Person person : persons) {
 				if (addresses.contains(person.getAddress())) {
 					listPersonInfo.add(person);
 				}
 			}
-		}
+        }		
 
 		return listPersonInfo;
 	}

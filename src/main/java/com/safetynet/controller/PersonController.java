@@ -21,8 +21,6 @@ import com.safetynet.model.PersonEnfant;
 import com.safetynet.model.PersonInfo;
 import com.safetynet.model.Safetynet;
 
-
-
 @RestController
 public class PersonController {
 	@Autowired
@@ -33,11 +31,19 @@ public class PersonController {
 	
 	List<Person> listPerson=null;
 	
+	/*
+	 * Ajouter une nouvelle personne
+	 */
+	
 	@PostMapping(value = "/person")
 	public Safetynet addPerson(@RequestBody Map<?, ?> person) {		
 		personMetier.addPerson(person);
 		return safetynet;
 	}
+	
+	/*
+	 * Mettre à jour une personne existante
+	 */
 	
 	@PutMapping(value = "/person")
 	public Safetynet updatePerson(@RequestBody Person person) {		
@@ -45,11 +51,19 @@ public class PersonController {
 		return safetynet;
 	}
 	
+	/*
+	 * Supprimer une personne
+	 */
+	
 	@DeleteMapping(value = "/person")
 	public Safetynet deletePerson(@RequestBody Person person) {			
 		listPerson=personMetier.deletePersonne(person.getFirstName(), person.getLastName(), safetynet.getPersons());
 		return safetynet;
 	}
+	
+	/*
+	 * Liste d'enfants (tout individu âgé de 18 ans ou moins) habitant à cette adresse
+	 */
 	
 	@GetMapping(value = "/childAlert")
 	public List<PersonEnfant> childAlert (@RequestParam String address) throws ParseException {			
@@ -58,6 +72,10 @@ public class PersonController {
 		return personMetier.listEnfant(personFoyers, listPersonEnfant, address);
 	}
 	
+	/*
+	 * Liste des numéros de téléphone des résidents desservis par la caserne de pompiers. 
+	 */
+	
 	@GetMapping(value = "/phoneAlert")
 	public List<String> phoneAlert (@RequestParam String firestation) {			
 		Map<Integer, Firestation> listFirestation = safetynet.getFirestations();
@@ -65,19 +83,23 @@ public class PersonController {
 		return personMetier.phoneAlert(firestation, listFirestation, listPerson);
 	}
 	
+	/*
+	 * Afficher les infos et antecedants medicaux  de chaque habitant
+	 */
+	
 	@GetMapping(value = "/personInfo")
 	public List<PersonInfo> personInfo (@RequestParam String firstName, String lastName) throws ParseException {			
 		listPerson = safetynet.getPersons();
 		return personMetier.listPersonInfo(firstName, lastName, listPerson);
 	}
 	
+	/*
+	 * Afficher l'adresses mail de tous les habitants de la ville.
+	 */
+	
 	@GetMapping(value = "/communityEmail")
 	public List<String> communityEmail(@RequestParam String city) {
 		listPerson = safetynet.getPersons();
 		return personMetier.communityEmail(city, listPerson);
 	}
-	
-	
-	
-
 }

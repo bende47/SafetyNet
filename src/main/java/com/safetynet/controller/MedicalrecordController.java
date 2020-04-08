@@ -21,18 +21,30 @@ public class MedicalrecordController {
 	
 	@Autowired
 	private Safetynet safetynet;
-	 
+	
+	/*
+	 * Ajout de dossier medical
+	 */
+	
 	@PostMapping(value="/medicalRecord")
 	public  Safetynet addMedicalRecord(@RequestBody  Map<?, ?> medicalRecord) {
 		medicalrecordMetier.addMedicalrecord(medicalRecord);		
 		return safetynet;
 	}
 	
+	/*
+	 * Modificatioin de dossier medical
+	 */
+	
 	@PutMapping(value="/medicalRecord")
 	public  Safetynet updateMedicalRecord(@RequestBody  Map<?, ?> medicalRecord) {
 		medicalrecordMetier.updateMedicalrecord(medicalRecord);
 		return safetynet;
 	}
+	
+	/*
+	 * Suppression dossier medical
+	 */
 	
 	@DeleteMapping(value="/medicalRecord")
 	public  Safetynet deleteMedicalRecord(@RequestBody  Map<?, ?> medicalRecord) {
