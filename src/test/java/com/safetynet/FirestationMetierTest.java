@@ -8,10 +8,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Map.Entry;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +22,6 @@ import com.safetynet.metier.PersonMetierImpl;
 import com.safetynet.model.Firestation;
 import com.safetynet.model.Medicalrecord;
 import com.safetynet.model.Person;
-import com.safetynet.model.PersonHabitant;
 import com.safetynet.model.PersonStation;
 
 public class FirestationMetierTest {
@@ -35,7 +34,6 @@ private static PersonMetierImpl personMetier;
 	private static void setUp() {
 		firestationMetier = new FirestationMetierImpl();
 		personMetier = new PersonMetierImpl();
-
 	}
 	
 	@Test
@@ -81,8 +79,8 @@ private static PersonMetierImpl personMetier;
 	public void stationNumberTest() throws ParseException {
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-		String date1 = "03/06/1984";
-		String date2 = "03/06/2010";
+		String date1 = "01/10/1993";
+		String date2 = "01/10/2015";
 
 		LocalDate birthdate1 = LocalDate.parse(date1, formatter);
 		LocalDate birthdate2 = LocalDate.parse(date2, formatter);
@@ -125,18 +123,14 @@ private static PersonMetierImpl personMetier;
 
 		List<Person> listPersonResult = new ArrayList<Person>();
 		Set<String> addresses = new HashSet<String>();
-
-		Set cles = getfirestations1.keySet();
-		Iterator it = cles.iterator();
-
-		while (it.hasNext()) {
-			Object station = it.next();
+				
+		for (Entry<Integer, Firestation> keys : getfirestations1.entrySet()) {
 			Firestation fire = getfirestations1.get(Integer.parseInt("2"));
 
 			if (fire.getStation() == Integer.parseInt("2")) {
 				addresses = fire.getAddresses();
 			}
-		}
+        }
 
 		for (Person person : listPerson) {
 			if (addresses.contains(person.getAddress())) {
@@ -167,8 +161,8 @@ private static PersonMetierImpl personMetier;
 	public void floodTest() throws ParseException {
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
-		String date1 = "03/06/1984";
-		String date2 = "03/06/2010";
+		String date1 = "01/10/1993";
+		String date2 = "01/10/2015";
 
 		LocalDate birthdate1 = LocalDate.parse(date1, formatter);
 		LocalDate birthdate2 = LocalDate.parse(date2, formatter);
@@ -214,31 +208,23 @@ private static PersonMetierImpl personMetier;
 
 		List<Person> listPersonResult = new ArrayList<Person>();
 		Set<String> addresses = new HashSet<String>();
-
-		Set cles = getfirestations1.keySet();
-		Iterator it = cles.iterator();
-
-		while (it.hasNext()) {
-			Object station = it.next();
+		
+		for (Entry<Integer, Firestation> keys : getfirestations1.entrySet()) {
 			Firestation fire = getfirestations1.get(Integer.parseInt("2"));
 
 			if (fire.getStation() == Integer.parseInt("2")) {
 				addresses = fire.getAddresses();
 			}
-		}
-
-		Set key = getFoyers.keySet();
-		Iterator iter = key.iterator();
-		while (iter.hasNext()) {
-			Object num = iter.next();
-			List<Person> persons = getFoyers.get(num);
-
+        }
+		
+		for (Entry<String, List<Person>> keys : getFoyers.entrySet()) {
+			List<Person> persons = getFoyers.get(keys.getKey());
 			for (Person person : persons) {
 				if (addresses.contains(person.getAddress())) {
 					listPersonResult.add(person);
 				}
 			}
-		}
+        }	
 
 		List<Person> test = firestationMetier.flood("2", getfirestations1, getFoyers);
 

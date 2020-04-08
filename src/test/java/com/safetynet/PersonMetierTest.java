@@ -313,8 +313,6 @@ public class PersonMetierTest {
 
 		assertEquals(mailList.toString(), test.toString());
 	}
-	
-	
 
 	@Test
 	@DisplayName("Person adulte")
